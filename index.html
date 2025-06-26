@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Free Fire Clone</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    canvas { display: block; background: #222; margin: 0 auto; }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas" width="480" height="320"></canvas>
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");const player = { x: 50, y: 150, width: 20, height: 20, color: "lime", speed: 4 };
+
+const bullets = []; const enemies = [{ x: 400, y: 100, width: 20, height: 20, color: "red", speed: 1 }];
+
+let keys = {};
+
+document.addEventListener("keydown", e => keys[e.key] = true); document.addEventListener("keyup", e => keys[e.key] = false);
+
+document.addEventListener("click", () => { bullets.push({ x: player.x + player.width, y: player.y + player.height / 2, width: 10, height: 2, color: "yellow", speed: 6 }); });
+
+function update() { // Player Movement if (keys["ArrowUp"]) player.y -= player.speed; if (keys["ArrowDown"]) player.y += player.speed; if (keys["ArrowLeft"]) player.x -= player.speed; if (keys["ArrowRight"]) player.x += player.speed;
+
+// Bullets update
+bullets.forEach(bullet => bullet.x += bullet.speed);
+
+// Enemies update
+enemies.forEach(enemy => {
+  if (enemy.x > player.x) enemy.x -= enemy.speed;
+  if (enemy.x < player.x) enemy.x += enemy.speed;
+  if (enemy.y > player.y) enemy.y -= enemy.speed;
+  if (enemy.y < player.y) enemy.y += enemy.speed;
+});
+
+// Collision detection
+bullets.forEach((bullet, i) => {
+  enemies.forEach((enemy, j) => {
+    if (bullet.x < enemy.x + enemy.width && bullet.x + bullet.width > enemy.x && bullet.y < enemy.y + enemy.height && bullet.y + bullet.height > enemy.y) {
+      enemies.splice(j, 1);
+      bullets.splice(i, 1);
+    }
+  });
+});
+
+}
+
+function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = player.color; ctx.fillRect(player.x, player.y, player.width, player.height);
+
+bullets.forEach(bullet => {
+  ctx.fillStyle = bullet.color;
+  ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+});
+
+enemies.forEach(enemy => {
+  ctx.fillStyle = enemy.color;
+  ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+});
+
+}
+
+function loop() { update(); draw(); requestAnimationFrame(loop); }
+
+loop(); </script>
+
+</body>
+</html><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Free Fire Clone</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    canvas { display: block; background: #222; margin: 0 auto; }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas" width="480" height="320"></canvas>
+<script>
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");const player = { x: 50, y: 150, width: 20, height: 20, color: "lime", speed: 4 };
+
+const bullets = []; const enemies = [{ x: 400, y: 100, width: 20, height: 20, color: "red", speed: 1 }];
+
+let keys = {};
+
+document.addEventListener("keydown", e => keys[e.key] = true); document.addEventListener("keyup", e => keys[e.key] = false);
+
+document.addEventListener("click", () => { bullets.push({ x: player.x + player.width, y: player.y + player.height / 2, width: 10, height: 2, color: "yellow", speed: 6 }); });
+
+function update() { // Player Movement if (keys["ArrowUp"]) player.y -= player.speed; if (keys["ArrowDown"]) player.y += player.speed; if (keys["ArrowLeft"]) player.x -= player.speed; if (keys["ArrowRight"]) player.x += player.speed;
+
+// Bullets update
+bullets.forEach(bullet => bullet.x += bullet.speed);
+
+// Enemies update
+enemies.forEach(enemy => {
+  if (enemy.x > player.x) enemy.x -= enemy.speed;
+  if (enemy.x < player.x) enemy.x += enemy.speed;
+  if (enemy.y > player.y) enemy.y -= enemy.speed;
+  if (enemy.y < player.y) enemy.y += enemy.speed;
+});
+
+// Collision detection
+bullets.forEach((bullet, i) => {
+  enemies.forEach((enemy, j) => {
+    if (bullet.x < enemy.x + enemy.width && bullet.x + bullet.width > enemy.x && bullet.y < enemy.y + enemy.height && bullet.y + bullet.height > enemy.y) {
+      enemies.splice(j, 1);
+      bullets.splice(i, 1);
+    }
+  });
+});
+
+}
+
+function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = player.color; ctx.fillRect(player.x, player.y, player.width, player.height);
+
+bullets.forEach(bullet => {
+  ctx.fillStyle = bullet.color;
+  ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+});
+
+enemies.forEach(enemy => {
+  ctx.fillStyle = enemy.color;
+  ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+});
+
+}
+
+function loop() { update(); draw(); requestAnimationFrame(loop); }
+
+loop(); </script>
+
+</body>
+</html>
